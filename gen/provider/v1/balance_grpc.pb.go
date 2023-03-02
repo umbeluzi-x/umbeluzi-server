@@ -53,15 +53,14 @@ func (c *balanceServiceClient) ValidateAccount(ctx context.Context, in *GetBalan
 }
 
 // BalanceServiceServer is the server API for BalanceService service.
-// All implementations must embed UnimplementedBalanceServiceServer
+// All implementations should embed UnimplementedBalanceServiceServer
 // for forward compatibility
 type BalanceServiceServer interface {
 	ListBalances(context.Context, *ListBalancesRequest) (*ListBalancesResponse, error)
 	ValidateAccount(context.Context, *GetBalanceRequest) (*GetBalanceResponse, error)
-	mustEmbedUnimplementedBalanceServiceServer()
 }
 
-// UnimplementedBalanceServiceServer must be embedded to have forward compatible implementations.
+// UnimplementedBalanceServiceServer should be embedded to have forward compatible implementations.
 type UnimplementedBalanceServiceServer struct {
 }
 
@@ -71,7 +70,6 @@ func (UnimplementedBalanceServiceServer) ListBalances(context.Context, *ListBala
 func (UnimplementedBalanceServiceServer) ValidateAccount(context.Context, *GetBalanceRequest) (*GetBalanceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ValidateAccount not implemented")
 }
-func (UnimplementedBalanceServiceServer) mustEmbedUnimplementedBalanceServiceServer() {}
 
 // UnsafeBalanceServiceServer may be embedded to opt out of forward compatibility for this service.
 // Use of this interface is not recommended, as added methods to BalanceServiceServer will

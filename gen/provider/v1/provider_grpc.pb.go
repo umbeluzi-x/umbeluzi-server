@@ -53,15 +53,14 @@ func (c *providerServiceClient) CreatePayment(ctx context.Context, in *CreatePay
 }
 
 // ProviderServiceServer is the server API for ProviderService service.
-// All implementations must embed UnimplementedProviderServiceServer
+// All implementations should embed UnimplementedProviderServiceServer
 // for forward compatibility
 type ProviderServiceServer interface {
 	GetPayment(context.Context, *GetPaymentRequest) (*GetPaymentResponse, error)
 	CreatePayment(context.Context, *CreatePaymentRequest) (*CreatePaymentResponse, error)
-	mustEmbedUnimplementedProviderServiceServer()
 }
 
-// UnimplementedProviderServiceServer must be embedded to have forward compatible implementations.
+// UnimplementedProviderServiceServer should be embedded to have forward compatible implementations.
 type UnimplementedProviderServiceServer struct {
 }
 
@@ -71,7 +70,6 @@ func (UnimplementedProviderServiceServer) GetPayment(context.Context, *GetPaymen
 func (UnimplementedProviderServiceServer) CreatePayment(context.Context, *CreatePaymentRequest) (*CreatePaymentResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreatePayment not implemented")
 }
-func (UnimplementedProviderServiceServer) mustEmbedUnimplementedProviderServiceServer() {}
 
 // UnsafeProviderServiceServer may be embedded to opt out of forward compatibility for this service.
 // Use of this interface is not recommended, as added methods to ProviderServiceServer will
