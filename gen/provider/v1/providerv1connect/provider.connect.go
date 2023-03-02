@@ -21,88 +21,88 @@ import (
 const _ = connect_go.IsAtLeastVersion0_1_0
 
 const (
-	// PetStoreServiceName is the fully-qualified name of the PetStoreService service.
-	PetStoreServiceName = "provider.v1.PetStoreService"
+	// ProviderServiceName is the fully-qualified name of the ProviderService service.
+	ProviderServiceName = "provider.v1.ProviderService"
 )
 
-// PetStoreServiceClient is a client for the provider.v1.PetStoreService service.
-type PetStoreServiceClient interface {
+// ProviderServiceClient is a client for the provider.v1.ProviderService service.
+type ProviderServiceClient interface {
 	GetPayment(context.Context, *connect_go.Request[v1.GetPaymentRequest]) (*connect_go.Response[v1.GetPaymentResponse], error)
 	CreatePayment(context.Context, *connect_go.Request[v1.CreatePaymentRequest]) (*connect_go.Response[v1.CreatePaymentResponse], error)
 }
 
-// NewPetStoreServiceClient constructs a client for the provider.v1.PetStoreService service. By
+// NewProviderServiceClient constructs a client for the provider.v1.ProviderService service. By
 // default, it uses the Connect protocol with the binary Protobuf Codec, asks for gzipped responses,
 // and sends uncompressed requests. To use the gRPC or gRPC-Web protocols, supply the
 // connect.WithGRPC() or connect.WithGRPCWeb() options.
 //
 // The URL supplied here should be the base URL for the Connect or gRPC server (for example,
 // http://api.acme.com or https://acme.com/grpc).
-func NewPetStoreServiceClient(httpClient connect_go.HTTPClient, baseURL string, opts ...connect_go.ClientOption) PetStoreServiceClient {
+func NewProviderServiceClient(httpClient connect_go.HTTPClient, baseURL string, opts ...connect_go.ClientOption) ProviderServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
-	return &petStoreServiceClient{
+	return &providerServiceClient{
 		getPayment: connect_go.NewClient[v1.GetPaymentRequest, v1.GetPaymentResponse](
 			httpClient,
-			baseURL+"/provider.v1.PetStoreService/GetPayment",
+			baseURL+"/provider.v1.ProviderService/GetPayment",
 			opts...,
 		),
 		createPayment: connect_go.NewClient[v1.CreatePaymentRequest, v1.CreatePaymentResponse](
 			httpClient,
-			baseURL+"/provider.v1.PetStoreService/CreatePayment",
+			baseURL+"/provider.v1.ProviderService/CreatePayment",
 			opts...,
 		),
 	}
 }
 
-// petStoreServiceClient implements PetStoreServiceClient.
-type petStoreServiceClient struct {
+// providerServiceClient implements ProviderServiceClient.
+type providerServiceClient struct {
 	getPayment    *connect_go.Client[v1.GetPaymentRequest, v1.GetPaymentResponse]
 	createPayment *connect_go.Client[v1.CreatePaymentRequest, v1.CreatePaymentResponse]
 }
 
-// GetPayment calls provider.v1.PetStoreService.GetPayment.
-func (c *petStoreServiceClient) GetPayment(ctx context.Context, req *connect_go.Request[v1.GetPaymentRequest]) (*connect_go.Response[v1.GetPaymentResponse], error) {
+// GetPayment calls provider.v1.ProviderService.GetPayment.
+func (c *providerServiceClient) GetPayment(ctx context.Context, req *connect_go.Request[v1.GetPaymentRequest]) (*connect_go.Response[v1.GetPaymentResponse], error) {
 	return c.getPayment.CallUnary(ctx, req)
 }
 
-// CreatePayment calls provider.v1.PetStoreService.CreatePayment.
-func (c *petStoreServiceClient) CreatePayment(ctx context.Context, req *connect_go.Request[v1.CreatePaymentRequest]) (*connect_go.Response[v1.CreatePaymentResponse], error) {
+// CreatePayment calls provider.v1.ProviderService.CreatePayment.
+func (c *providerServiceClient) CreatePayment(ctx context.Context, req *connect_go.Request[v1.CreatePaymentRequest]) (*connect_go.Response[v1.CreatePaymentResponse], error) {
 	return c.createPayment.CallUnary(ctx, req)
 }
 
-// PetStoreServiceHandler is an implementation of the provider.v1.PetStoreService service.
-type PetStoreServiceHandler interface {
+// ProviderServiceHandler is an implementation of the provider.v1.ProviderService service.
+type ProviderServiceHandler interface {
 	GetPayment(context.Context, *connect_go.Request[v1.GetPaymentRequest]) (*connect_go.Response[v1.GetPaymentResponse], error)
 	CreatePayment(context.Context, *connect_go.Request[v1.CreatePaymentRequest]) (*connect_go.Response[v1.CreatePaymentResponse], error)
 }
 
-// NewPetStoreServiceHandler builds an HTTP handler from the service implementation. It returns the
+// NewProviderServiceHandler builds an HTTP handler from the service implementation. It returns the
 // path on which to mount the handler and the handler itself.
 //
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
-func NewPetStoreServiceHandler(svc PetStoreServiceHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
+func NewProviderServiceHandler(svc ProviderServiceHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
 	mux := http.NewServeMux()
-	mux.Handle("/provider.v1.PetStoreService/GetPayment", connect_go.NewUnaryHandler(
-		"/provider.v1.PetStoreService/GetPayment",
+	mux.Handle("/provider.v1.ProviderService/GetPayment", connect_go.NewUnaryHandler(
+		"/provider.v1.ProviderService/GetPayment",
 		svc.GetPayment,
 		opts...,
 	))
-	mux.Handle("/provider.v1.PetStoreService/CreatePayment", connect_go.NewUnaryHandler(
-		"/provider.v1.PetStoreService/CreatePayment",
+	mux.Handle("/provider.v1.ProviderService/CreatePayment", connect_go.NewUnaryHandler(
+		"/provider.v1.ProviderService/CreatePayment",
 		svc.CreatePayment,
 		opts...,
 	))
-	return "/provider.v1.PetStoreService/", mux
+	return "/provider.v1.ProviderService/", mux
 }
 
-// UnimplementedPetStoreServiceHandler returns CodeUnimplemented from all methods.
-type UnimplementedPetStoreServiceHandler struct{}
+// UnimplementedProviderServiceHandler returns CodeUnimplemented from all methods.
+type UnimplementedProviderServiceHandler struct{}
 
-func (UnimplementedPetStoreServiceHandler) GetPayment(context.Context, *connect_go.Request[v1.GetPaymentRequest]) (*connect_go.Response[v1.GetPaymentResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("provider.v1.PetStoreService.GetPayment is not implemented"))
+func (UnimplementedProviderServiceHandler) GetPayment(context.Context, *connect_go.Request[v1.GetPaymentRequest]) (*connect_go.Response[v1.GetPaymentResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("provider.v1.ProviderService.GetPayment is not implemented"))
 }
 
-func (UnimplementedPetStoreServiceHandler) CreatePayment(context.Context, *connect_go.Request[v1.CreatePaymentRequest]) (*connect_go.Response[v1.CreatePaymentResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("provider.v1.PetStoreService.CreatePayment is not implemented"))
+func (UnimplementedProviderServiceHandler) CreatePayment(context.Context, *connect_go.Request[v1.CreatePaymentRequest]) (*connect_go.Response[v1.CreatePaymentResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("provider.v1.ProviderService.CreatePayment is not implemented"))
 }
