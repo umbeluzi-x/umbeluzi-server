@@ -8,11 +8,11 @@ import (
 )
 
 type Queue struct {
-	db *redis.Client
+	Client *redis.Client
 }
 
 func (q *Queue) Get(ctx context.Context, key string) (string, error) {
-	val, err := q.db.Get(ctx, key).Result()
+	val, err := q.Client.Get(ctx, key).Result()
 	if err != nil {
 		return "", err
 	}
@@ -21,7 +21,7 @@ func (q *Queue) Get(ctx context.Context, key string) (string, error) {
 }
 
 func (q *Queue) Put(ctx context.Context, key string, value string, duration time.Duration) error {
-	if err := q.db.Set(ctx, key, value, duration).Err(); err != nil {
+	if err := q.Client.Set(ctx, key, value, duration).Err(); err != nil {
 		return err
 	}
 
