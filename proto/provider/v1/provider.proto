@@ -10,7 +10,7 @@ message CreatePaymentResponse {}
 
 message GetPaymentResponse {}
 
-service PetStoreService {
+service ProviderService {
   rpc GetPayment(GetPaymentRequest) returns (GetPaymentResponse) {}
   rpc CreatePayment(CreatePaymentRequest) returns (CreatePaymentResponse) {}
 }
